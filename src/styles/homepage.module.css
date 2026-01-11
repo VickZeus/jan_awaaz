@@ -1,7 +1,7 @@
 .title{
     color:aliceblue;
     font-size:24px;
-    margin-right:80px;
+    margin-right:10px;
 }
 
 .row_flex{
@@ -18,9 +18,33 @@
     margin-right:10px;
 }
 
-.layout{
-    margin:10px 0px 20px 0px;
+.mblayout{
+    margin:0px 0px 20px 0px;
     width:100%;
-    padding:0px 10px 0px 10px;
+    padding:10px;
     height:fit-content;
+    background-color:rgba(10, 51, 101, 0.864);
+}
+
+.logo{
+    display:grid;
+    grid-template-columns: repeat(3,10px);
+    grid-template-rows:repeat(3,10px);
+    margin-right:auto;
+    height:fit-content;
+    width:fit-content;
+    gap:1px;
+}
+
+.logo div:nth-child(2),
+.logo div:nth-child(4),
+.logo div:nth-child(6),
+.logo div:nth-child(8){
+    background-color:rgb(255, 11, 11);
+    border-radius:50%;
+}
+
+.logo div:nth-child(5){
+    background-color:rgb(241, 238, 238);
+    border-radius:50%;
 }
