@@ -23,7 +23,7 @@
     width:100%;
     padding:10px;
     height:fit-content;
-    background-color:rgba(10, 51, 101, 0.864);
+    background-color:#0d1b2a;
 }
 
 .logo{
@@ -34,6 +34,7 @@
     height:fit-content;
     width:fit-content;
     gap:1px;
+    transition:transform 1s ease-in-out;
 }
 
 .logo div:nth-child(2),
@@ -44,7 +45,21 @@
     border-radius:50%;
 }
 
+.logo:hover{
+    transform:rotate(720deg);
+}
+
 .logo div:nth-child(5){
-    background-color:rgb(241, 238, 238);
+    background-color:#f1eeee;
     border-radius:50%;
+}
+
+.footer{
+    width:100%;
+    height:fit-content;
+    font-size:12px;
+    background-color:#415a77;
+    text-align:center;
+    margin-top:20px;
+    padding:10px;
 }
