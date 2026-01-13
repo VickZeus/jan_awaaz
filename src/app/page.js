@@ -1,5 +1,8 @@
+"use client"
+
 import {Atma,Zain} from "next/font/google"
 import style from "../styles/homepage.module.css"
+import {useRouter} from "next/navigation"
 
 const atma=Atma({subsets:["latin"],weight:["400","700"]})
 const zain=Zain({subsets:["latin"],weight:["400","700"]})
@@ -21,14 +24,15 @@ function Logo(){
 }
 
 function HeadSection(){
+    const router=useRouter();
     return(
         <div className={`${style.row_flex} ${style.mblayout} ${zain.className}`}>
             <div className={`${style.title} ${atma.className}`}>JanAwaaz</div>
             <Logo/>
             <div className={style.row_flex}>
-                <button className={style.options}>Contact</button>
-                <button className={style.options}>Help</button>
-                <button className={style.options}>Login</button>
+                <button className={style.options} onClick={()=>router.push("/Contact")}>Contact</button>
+                <button className={style.options} onClick={()=>router.push("/Help")}>Help</button>
+                <button className={style.options} onClick={()=>router.push("/")}>Login</button>
             </div>
         </div>
     )
@@ -38,8 +42,8 @@ function FootSection(){
     return(
         <footer className={`${style.footer} ${zain.className}`} style={{alignItems:"center",justifyContent:"center"}}>
             <div className={style.row_flex} style={{gap:"20px"}}>
-                <div className={style.row_flex} style={{gap:"5px",marginRight:"auto"}}>
-                    <div className={atma.className} style={{fontSize:"18px"}}>JanAwaaz</div>
+                <div className={style.row_flex} style={{gap:"10px",marginRight:"auto",marginBlock:"auto",fontSize:"24px"}}>
+                    <div className={atma.className} style={{}}>JanAwaaz</div>
                     <Logo/>
                 </div>
 
