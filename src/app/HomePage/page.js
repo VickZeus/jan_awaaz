@@ -28,17 +28,13 @@ function HeadSection(){
         router.replace("/")
     }},[status,router])
 
-
-
-
-
     return(
         <div className={`${style.row_flex} ${style.mblayout} heading`}>
             <div className={`${style.title}`}>JanAwaaz</div>
             <Logo/>
             <div className={style.row_flex}>
-                <button className={style.options} onClick={()=>router.push("/Contact")}>Contact</button>
-                <button className={style.options} onClick={()=>router.push("/Help")}>Help</button>
+                <button className={style.options} onClick={()=>router.push("/Contact")}>New</button>
+                <button className={style.options} onClick={()=>router.push("/Help")}>Old</button>
                 <button id="loginButton" className={style.options} onClick={()=>signOut()}>SignOut</button>
             </div>
         </div>

@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle,faGithub,faFacebook } from "@fortawesome/free-brands-svg-icons";
+import {useState} from "react";
+import Link from "next/link"
 
 
 function LoginOptions(){
@@ -22,15 +24,44 @@ function LoginOptions(){
 }
 
 function SignupOption(){
+    const [userName,setUserName]=useState("");
+    const [password,setPassword]=useState("");
+
+    const onsubmitHandler=async(event)=>{
+        event.preventDefault();
+    }
+
     return(
         <div className={style2.col_flex} style={{color:"white",textAlign:"center"}}>
-        <div>Sign In</div>
-        <form className={style2.col_flex} >
-            <input type="text" placeholder="Enter UserName" className={style.inputBox}></input>
-            <input type="password" placeholder="Enter Password" className={style.inputBox}></input>
-            <button className={style.submitButton} onClikc={()=>submit()}>LogIn</button>
+        <div style={{fontSize:"24px"}}>Sign In</div>
+        <form onSubmit={onsubmitHandler} className={style2.col_flex} >
+            <input type="text" placeholder="Enter UserName" className={style.inputBox} onChange={(e)=>setUserName(e.target.value)}></input>
+            <input type="password" placeholder="Enter Password" className={style.inputBox} onChange={(e)=>setUserName(e.target.value)}></input>
+            <button type="submit" className={style.submitButton}>LogIn</button>
         </form>
-        <p style={{textAlign:"center",margin:"5px"}}>OR</p>
+        </div>
+    )
+}
+
+function CreateAccount(){
+    const [username,setUserName]=useState("");
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("");  
+    
+    const accountCreateHandler=async (event)=>{
+        event.preventDefault();
+        console.log(event.target.value);
+    }
+
+    return(
+        <div style={{color:"white",textAlign:"center"}}>
+            <p style={{fontSize:"24px"}}>Create Account</p>
+            <form onSubmit={accountCreateHandler} className={style2.col_flex}>
+                <input placeholder="Enter Username" className={style.inputBox} value="username" onChange={(e)=>setUserName(e.target.value)}></input>
+                <input placeholder="Enter Email Id" className={style.inputBox} value="email" onChange={(e)=>setEmail(e.target.value)}></input>
+                <input placeholder="Enter Password" className={style.inputBox} value="password" type="Password" onChange={(e)=>setPassword(e.target.value)}></input>
+                <button type="submit" className={style.submitButton}>Sign-Up</button>
+            </form>
         </div>
     )
 }
@@ -38,6 +69,7 @@ function SignupOption(){
 export default function LoginPage(){
     const {data:session,status}=useSession();
     const router=useRouter();
+    const [userStatus,setStatus]=useState("old");
 
     useEffect(()=>{
     if(status==="authenticated"){
@@ -50,7 +82,15 @@ export default function LoginPage(){
             <LogoAndTitle styleExtra={{alignSelf:"center",color:"white"}}/>
                 <div className={`${style2.col_flex}`} style={{backgroundColor:"black",borderRadius:"10px",alignItems:"center",width:"100%",padding:"10px"}}>
                     <Image src="/LoginIMG.png" alt="RandomImage" width={120} height={120}/>
-                    <SignupOption/>
+                    {userStatus=="old"?<SignupOption/>:<CreateAccount/>}
+
+                    <div className={style2.row_flex} style={{marginBlock:"10px",gap:"30px"}}>
+                        <Link href="/forgotPassword" style={{color:"blue"}}>Forgot Password ?</Link>
+                        <button onClick={()=>{
+                            userStatus=="new"?setStatus("old"):setStatus("new")
+                        }}>{userStatus=="old"?"Create Account?":"Sign In"}</button>
+                    </div>
+                    <p style={{textAlign:"center",margin:"10px",color:"white"}}>OR</p>
                     <LoginOptions/>
                 </div>
         </div>
