@@ -12,6 +12,7 @@ import { faGoogle,faGithub,faFacebook } from "@fortawesome/free-brands-svg-icons
 import {useState} from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link"
+import {supabase} from '../api/login/supabaseClient';
 
 
 function LoginOptions(){
@@ -57,10 +58,37 @@ function CreateAccount(){
     const [username,setUserName]=useState("");
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");  
-    
+    const [loading, setLoading] = useState(false);
+
+    const alerter=(error)=>{
+    const k=document.getElementById("alert")
+        if(error.message==="duplicate key value violates unique constraint \"userinfo_email_key\""){
+            k.innerHTML="*Email Already Registered"
+        }
+        else if(error.message==="duplicate key value violates unique constraint \"userinfo_pkey\""){
+            k.innerHTML="Username already registered"
+        }
+        else{
+            k.innerHTML="Try Again."
+        } 
+    }
+
     const accountCreateHandler=async (event)=>{
         event.preventDefault();
-        console.log(event.target.value);
+
+        setLoading(true);
+        const {data,error}=await supabase.from("userinfo").insert([{username,email,password}])
+        setLoading(false);
+
+        if(error){
+            alerter(error);
+            return;
+        }
+        else{
+            setUserName("");
+            setEmail("");
+            setPassword("");
+        }
     }
 
     return(
@@ -70,6 +98,7 @@ function CreateAccount(){
                 <JoinIcon Icon={<FaUser size={20}/>} JSX={<input placeholder="Enter Username" className={style.inputBox} value={username} onChange={(e)=>setUserName(e.target.value)}></input>}/>
                 <JoinIcon Icon={<FaEnvelope size={20}/>} JSX={<input placeholder="Enter Email Id" className={style.inputBox} value={email} onChange={(e)=>setEmail(e.target.value)}></input>}/>
                 <JoinIcon Icon={<FaLock size={20}/>} JSX={<input placeholder="Enter Password" className={style.inputBox} value={password} type="Password" onChange={(e)=>setPassword(e.target.value)}></input>}/>
+                <div id="alert" style={{color:"white",fontSize:"14px"}}></div>
                 <button type="submit" className={style.submitButton}>Sign-Up</button>
             </form>
         </div>
