@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle,faGithub,faFacebook } from "@fortawesome/free-brands-svg-icons";
 import {useState} from "react";
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link"
 
 
@@ -19,6 +20,15 @@ function LoginOptions(){
             <button onClick={()=>signIn("google")} className={style.option}><FontAwesomeIcon icon={faGoogle}/>LogIn Using Google</button>
             <button onClick={()=>signIn("github")} className={style.option}><FontAwesomeIcon icon={faGithub}/>LogIn Using Github</button>
             <button onClick={()=>signIn("facebook")} className={style.option}><FontAwesomeIcon icon={faFacebook}/>LogIn Using Facebook</button>
+        </div>
+    )
+}
+
+function JoinIcon({Icon,JSX}){
+    return(
+        <div className={style2.row_flex} style={{justifyContent:"center",alignItems:"center",gap:"10px"}}>
+            {Icon}
+            {JSX}
         </div>
     )
 }
@@ -35,8 +45,8 @@ function SignupOption(){
         <div className={style2.col_flex} style={{color:"white",textAlign:"center"}}>
         <div style={{fontSize:"24px"}}>Sign In</div>
         <form onSubmit={onsubmitHandler} className={style2.col_flex} >
-            <input type="text" placeholder="Enter UserName" className={style.inputBox} onChange={(e)=>setUserName(e.target.value)}></input>
-            <input type="password" placeholder="Enter Password" className={style.inputBox} onChange={(e)=>setUserName(e.target.value)}></input>
+            <JoinIcon Icon={<FaUser size={20}/>} JSX={<input type="text" placeholder="Enter UserName" className={style.inputBox} onChange={(e)=>setUserName(e.target.value)}></input>}/>
+            <JoinIcon Icon={<FaLock size={20}/>} JSX={<input type="password" placeholder="Enter Password" className={style.inputBox} onChange={(e)=>setPassword(e.target.value)}></input>}/>
             <button type="submit" className={style.submitButton}>LogIn</button>
         </form>
         </div>
@@ -57,9 +67,9 @@ function CreateAccount(){
         <div style={{color:"white",textAlign:"center"}}>
             <p style={{fontSize:"24px"}}>Create Account</p>
             <form onSubmit={accountCreateHandler} className={style2.col_flex}>
-                <input placeholder="Enter Username" className={style.inputBox} value="username" onChange={(e)=>setUserName(e.target.value)}></input>
-                <input placeholder="Enter Email Id" className={style.inputBox} value="email" onChange={(e)=>setEmail(e.target.value)}></input>
-                <input placeholder="Enter Password" className={style.inputBox} value="password" type="Password" onChange={(e)=>setPassword(e.target.value)}></input>
+                <JoinIcon Icon={<FaUser size={20}/>} JSX={<input placeholder="Enter Username" className={style.inputBox} value={username} onChange={(e)=>setUserName(e.target.value)}></input>}/>
+                <JoinIcon Icon={<FaEnvelope size={20}/>} JSX={<input placeholder="Enter Email Id" className={style.inputBox} value={email} onChange={(e)=>setEmail(e.target.value)}></input>}/>
+                <JoinIcon Icon={<FaLock size={20}/>} JSX={<input placeholder="Enter Password" className={style.inputBox} value={password} type="Password" onChange={(e)=>setPassword(e.target.value)}></input>}/>
                 <button type="submit" className={style.submitButton}>Sign-Up</button>
             </form>
         </div>
@@ -88,7 +98,9 @@ export default function LoginPage(){
                         <Link href="/forgotPassword" style={{color:"blue"}}>Forgot Password ?</Link>
                         <button onClick={()=>{
                             userStatus=="new"?setStatus("old"):setStatus("new")
-                        }}>{userStatus=="old"?"Create Account?":"Sign In"}</button>
+                        }} style={{backgroundColor:"transparent",color:"white"}}>
+                            {userStatus=="old"?"Create Account?":"Sign In"}
+                        </button>
                     </div>
                     <p style={{textAlign:"center",margin:"10px",color:"white"}}>OR</p>
                     <LoginOptions/>
