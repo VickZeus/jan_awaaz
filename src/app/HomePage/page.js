@@ -1,82 +1,75 @@
 "use client"
-import style from "@/styles/homepage.module.css"
+import {FootSection,Logo,LogoAndTitle} from "../page.js"
+import useState from "react"
 import {useRouter} from "next/navigation"
+import style from  "@/styles/homepage.module.css"
 import {signOut,useSession} from "next-auth/react"
-import {useEffect} from "react"
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
 
-function Logo(){
+function GrievanceOption(){
     return(
-        <div className={style.logo}>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+        <Menubar>
+        <MenubarMenu className="text-black">
+            <MenubarTrigger className=" hover:bg-white hover:text-black">Grievance Portal</MenubarTrigger>
+            <MenubarContent className="w-fit">
+                <MenubarItem className="hover:!bg-green-400 hover:!text-white">
+                    Report An Issue
+                </MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem className="hover:!bg-green-400 hover:!text-white">
+                    Previous Issues
+                </MenubarItem>
+                <MenubarSeparator />
+            </MenubarContent>
+        </MenubarMenu>
+        </Menubar>
+    )
+}
+
+function ProfileOption(){
+    return(
+        <Menubar>
+        <MenubarMenu>
+            <MenubarTrigger>Profile</MenubarTrigger>
+            <MenubarContent>
+            <MenubarItem className="hover:!bg-green-400 hover:!text-white">Edit Profile</MenubarItem>
+            <MenubarItem className="hover:!bg-green-400 hover:!text-white">New Window</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem className="hover:!bg-red-400 hover:!text-white" onClick={()=>signOut({callbackUrl:"/"})}>LogOut</MenubarItem>
+            </MenubarContent>
+        </MenubarMenu>
+        </Menubar>
+    )
+}
+
+
+function Options(){
+    return(
+        <div className={style.row_flex} style={{gap:"10px"}}>
+            <GrievanceOption/>
+            <ProfileOption/>
         </div>
-    );
+    )
 }
 
 function HeadSection(){
     const router=useRouter();
-    const {date:session,status}=useSession();
-
-    useEffect(()=>{if(status==="unauthenticated"){
-        router.replace("/")
-    }},[status,router])
-
     return(
         <div className={`${style.row_flex} ${style.mblayout} heading`}>
             <div className={`${style.title}`}>JanAwaaz</div>
             <Logo/>
-            <div className={style.row_flex}>
-                <button className={style.options} onClick={()=>router.push("/Contact")}>New</button>
-                <button className={style.options} onClick={()=>router.push("/Help")}>Old</button>
-                <button id="loginButton" className={style.options} onClick={()=>signOut()}>SignOut</button>
-            </div>
+            <Options/>
         </div>
     )
 }
-
-function LogoAndTitle({styleExtra}){
-    return(
-        <div style={styleExtra}>
-            <div className={style.row_flex} style={{gap:"10px",marginRight:"auto",marginBlock:"auto",fontSize:"24px"}}>
-            <div className="heading">JanAwaaz</div>
-            <Logo/>
-            </div>
-        </div>
-
-    )
-}
-
-function FootSection(){
-    return(
-        <footer className={`${style.footer} heading`} style={{alignItems:"center",justifyContent:"center"}}>
-            <div className={style.row_flex} style={{gap:"20px"}}>
-                <LogoAndTitle/>
-
-                <div className={style.col_flex} >
-                    <p>Help</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                </div>
-                <div className={style.col_flex}>
-                    <p>Contact Us</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                </div>
-            </div>
-            <div>© 2025 JanAwaaz. All rights reserved.</div>
-        </footer>
-    )
-}
-
 
 export default function HomePage(){
     return(
@@ -86,5 +79,3 @@ export default function HomePage(){
         </div>
     )
 }
-
-export {HeadSection,FootSection,Logo,LogoAndTitle}

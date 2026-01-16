@@ -59,17 +59,18 @@ function CreateAccount(){
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");  
     const [loading, setLoading] = useState(false);
+    const [alertMessage,setAlert]=useState("");
+    const router=useRouter();
 
     const alerter=(error)=>{
-    const k=document.getElementById("alert")
         if(error.message==="duplicate key value violates unique constraint \"userinfo_email_key\""){
-            k.innerHTML="*Email Already Registered"
+            setAlert("*Email Already Registered")
         }
         else if(error.message==="duplicate key value violates unique constraint \"userinfo_pkey\""){
-            k.innerHTML="Username already registered"
+            setAlert("*Username already registered")
         }
         else{
-            k.innerHTML="Try Again."
+            setAlert("*Try Again")
         } 
     }
 
@@ -77,17 +78,25 @@ function CreateAccount(){
         event.preventDefault();
 
         setLoading(true);
-        const {data,error}=await supabase.from("userinfo").insert([{username,email,password}])
-        setLoading(false);
-
+        const {data,error}=await supabase.auth.signUp({email,password,options:{data:{username:username||"Null"}}})
         if(error){
+            setLoading(false);
+            console.log(error.message);
             alerter(error);
             return;
         }
         else{
+            const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({email,password,});
+            if(error){
+                console.log(error.message);
+                alerter(error);
+                return;
+            }
+            setLoading(false);
             setUserName("");
             setEmail("");
             setPassword("");
+            router.replace("/HomePage");
         }
     }
 
@@ -98,7 +107,7 @@ function CreateAccount(){
                 <JoinIcon Icon={<FaUser size={20}/>} JSX={<input placeholder="Enter Username" className={style.inputBox} value={username} onChange={(e)=>setUserName(e.target.value)}></input>}/>
                 <JoinIcon Icon={<FaEnvelope size={20}/>} JSX={<input placeholder="Enter Email Id" className={style.inputBox} value={email} onChange={(e)=>setEmail(e.target.value)}></input>}/>
                 <JoinIcon Icon={<FaLock size={20}/>} JSX={<input placeholder="Enter Password" className={style.inputBox} value={password} type="Password" onChange={(e)=>setPassword(e.target.value)}></input>}/>
-                <div id="alert" style={{color:"white",fontSize:"14px"}}></div>
+                <div style={{color:"white",fontSize:"14px"}}>{alertMessage}</div>
                 <button type="submit" className={style.submitButton}>Sign-Up</button>
             </form>
         </div>
