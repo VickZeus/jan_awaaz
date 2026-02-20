@@ -1,0 +1,126 @@
+.headSection{
+    height:fit-content;
+    width:100vw;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    background-color:var(--background);
+    padding:10px;
+    border-radius:2px;
+    border-bottom:1px solid #9b9b9b;
+}
+
+.footer{
+    height:fit-content;
+    width:100vw;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    background-color:var(--other);
+    padding:10px;
+    border-radius:2px;
+    border:1px solid #080000;
+}
+
+.logoTitle{
+    font-size:1.8rem;
+    font-weight:600;
+    font-family:var(--font-zain);
+    display:flex;
+    flex-direction:row;
+}
+
+.letter {
+  transition: 0.3s ease;
+  display: inline-block;
+}
+
+.letter:hover {
+    animation: bounce 0.5s;
+}
+
+@keyframes bounce{
+    0%{
+        color:var(--foreground);
+    }
+    50%{
+        color:rgb(243, 71, 71);
+        transform:translateY(-10px);
+    }
+    100%{
+        color:var(--foreground);
+        transform:translateY(+10px);
+    }
+}
+
+
+
+.homepage{
+    color:var(--foreground);
+    background-color:var(--background);
+}
+
+.logo{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows:repeat(3,1fr);
+    width:40px;height:40px;
+    gap:1px;
+    margin-left:10px;
+}
+
+.logo:hover{
+    animation:rotate 3s;
+}
+
+@keyframes rotate{
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(3600deg);
+    }
+}
+
+.box{
+    background-color:transparent;
+    border-radius:50%;
+}
+
+.box:nth-child(2),
+.box:nth-child(4),
+.box:nth-child(6),
+.box:nth-child(8){
+    background-color:rgb(252, 55, 55);
+    border:0.1px solid var(--foreground);
+}
+
+.box:nth-child(5){
+    background-color:seashell;
+    border:0.1px solid var(--foreground);
+}
+
+
+.mainContent{
+    height:80vh; 
+    width:100vw;
+    display:flex;
+    flex-direction:row;
+    background-color:var(--background);
+    gap:10px;
+    padding:10px;
+}
+
+.colFlex{
+    display:flex;
+    flex-direction:row;
+    gap:8px;
+}
+
+.OptButton{
+    font-size:min(1.2rem,14px); 
+    color:#9b9b9b;
+}
+.OptButton:hover{
+    color:aliceblue;
+}
