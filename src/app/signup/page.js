@@ -1,6 +1,7 @@
 "use client"
 
 import {useState} from "react"
+import {useRouter} from "next/navigation"
 import style from "@/styles/loginpage.module.css"
 import {LogoTitle} from "@/app/page"
 import Image from "next/image"
@@ -14,18 +15,18 @@ function LogoImage(){
 }
 
 function SignInForm(){
-    const [message,setMessage]=new useState("")
-    const [formData,setformData]=new useState({
+    const [message,setMessage]= useState("")
+    const [formData,setformData]=useState({
         username:"",password:"",email:"",password2:""
     }) 
-
+    const router=useRouter();
+    
     function handleChange(e){
         setformData({...formData,[e.target.name]:e.target.value})
         setMessage("");
     }
 
-    function handleSubmit(e){
-        console.log(formData)
+    async function handleSubmit(e){
         e.preventDefault()
         if(!formData.username || !formData.password ||!formData.email || !formData.password2){
             setMessage("All fields are required");
@@ -35,7 +36,21 @@ function SignInForm(){
         if(!(formData.password===formData.password2)){
             setMessage("Passwords do not match");return;
         }
-        return;
+        
+        try{
+            const res=await fetch("/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            })
+            if(!res.ok){
+                return;
+            }
+            router.replace("/homepage")
+        }
+        catch(error){
+            setMessage("Something Went Wrong")
+        }   
     }
     
     return(
