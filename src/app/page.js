@@ -1,6 +1,7 @@
-"use client";
+import IsLogged from "@/lib/loggedOrNot"
 import style from "../styles/homepage.module.css"
-import {useRouter} from "next/navigation"
+import Option3 from "@/components/profile_login"
+
 
 function LogoTitle() {
   const text = "JanAwaaz";
@@ -45,14 +46,14 @@ function Footer(){
 
 function HeadSection()
 {
-  const router=useRouter();
+  const user=IsLogged()
   return(
     <div className={style.headSection}>
       <LogoTitle/>
       <div className={`${style.colFlex} ${style.options}`}>
         <button className={style.OptButton}>Menu</button>
         <button className={style.OptButton}>Report</button>
-        <button className={style.OptButton} onClick={()=>router.push("/login")}>Login</button>
+        <Option3 user={user}/>
       </div>
     </div>
   )

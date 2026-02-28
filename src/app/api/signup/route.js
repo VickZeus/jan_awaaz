@@ -8,14 +8,17 @@ export async function POST(req){
         const body=await req.json()
         const {username,email,password}=body;
         const bpass=await bcrypt.hash(password,10)
+
         const uuid=randomUUID();
-        const {data1,error1}=await supabase
-                            .from("user_table")
-                            .insert([{uuid,name:username}])
         const {data2,error2}=await supabase
                             .from("info_table")
-                            .insert([{uuid,email,bpass}]) 
-        
+                            .insert([{uuid,name:username,email}])
+        if(error2)console.log(error2)
+        const {data1,error1}=await supabase
+                            .from("pass_table")
+                            .insert([{uuid,pass:bpass}])
+        if(error1)console.log(error1)
+
         if(error1 || error2){
             return NextResponse.json({error:"Table insertion error"},{status:400})
         }
