@@ -1,6 +1,9 @@
 import IsLogged from "@/lib/loggedOrNot"
 import style from "../styles/homepage.module.css"
 import Option3 from "@/components/profile_login"
+import {GetPFP} from "@/lib/getThings"
+import MainPage from "@/components/MainContent"
+
 
 
 function LogoTitle() {
@@ -44,39 +47,33 @@ function Footer(){
   )
 }
 
-function HeadSection()
+async function HeadSection()
 {
-  const user=IsLogged()
+  const pfp=await GetPFP()
+  const user=await IsLogged()
   return(
     <div className={style.headSection}>
       <LogoTitle/>
       <div className={`${style.colFlex} ${style.options}`}>
         <button className={style.OptButton}>Menu</button>
         <button className={style.OptButton}>Report</button>
-        <Option3 user={user}/>
+        <Option3 user={user} pfp={pfp}/>
       </div>
     </div>
   )
 }
 
 
-
-function MainContent(){
-  return(
-    <div className={style.mainContent}>Main Content</div>
-  )
-}
-
 export default function Home() {
   return (
     <div className={style.homepage}>
       <HeadSection/>
-      <MainContent/>
+      <MainPage/>
       <Footer/>
     </div>
   )
 }
 
-export {LogoTitle,Logo,Footer,HeadSection,MainContent}
+export {LogoTitle,Logo,Footer,HeadSection}
 
 

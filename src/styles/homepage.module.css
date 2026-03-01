@@ -100,12 +100,23 @@
     border:0.1px solid var(--foreground);
 }
 
+.containerMP{
+    height:80vh;
+    width:100vw;
+    display:flex;
+    flex-direction:col;
+    align-items:flex-start;
+    justify-content:flex-start;
+    background-color:transparent;
+    padding:10px;gap:10px;
+}
 
 .mainContent{
     height:80vh; 
     width:100vw;
     display:flex;
-    flex-direction:row;
+    flex-direction:col;
+    justify-content:center;
     background-color:var(--background);
     gap:10px;
     padding:10px;
@@ -117,10 +128,33 @@
     gap:8px;
 }
 
+.rowFlex{
+    display:flex;
+    flex-direction:row;  
+    gap:10px;
+}
+
 .OptButton{
     font-size:min(1.2rem,14px); 
     color:#9b9b9b;
 }
 .OptButton:hover{
     color:aliceblue;
+}
+
+.pfp{
+    border-radius:50%;
+}
+
+.join_icon{
+    display:inline-flex;
+    flex-direction:row;
+    gap:5px;
+    font-size:13px;align-items:center;
+}
+
+.join_icon:hover{
+    color:black;
+    background-color:white;
+    padding:1px;
 }
