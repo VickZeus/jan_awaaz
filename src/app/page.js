@@ -3,6 +3,7 @@ import style from "../styles/homepage.module.css"
 import Option3 from "@/components/profile_login"
 import {GetPFP} from "@/lib/getThings"
 import MainPage from "@/components/MainContent"
+import {ReportPage} from "@/components/profile_login"
 
 
 
@@ -56,7 +57,7 @@ async function HeadSection()
       <LogoTitle/>
       <div className={`${style.colFlex} ${style.options}`}>
         <button className={style.OptButton}>Menu</button>
-        <button className={style.OptButton}>Report</button>
+        <ReportPage/>
         <Option3 user={user} pfp={pfp}/>
       </div>
     </div>

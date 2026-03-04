@@ -1,0 +1,136 @@
+
+.joinRow{
+    display:flex;
+    flex-direction:row;
+    gap:10px;
+}
+
+.back_button{
+    position:fixed;
+    z-index:50;
+    width:fit-content;
+    height:fit-content;
+    padding:2px;
+}
+
+.joinRows{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:0px;
+}
+
+.joinCol{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.joinColNG{
+    display:flex;
+    flex-direction:column;
+    gap:0px;
+    box-shadow:1px 1px 10px rgb(239, 237, 237);
+    border:1px solid rgb(177, 176, 176);
+    padding:10px;
+    align-items:center;
+    text-align:center;
+}
+
+.flexCol{
+    height:100vh;
+    width:100vw;
+}
+
+.container{
+    position:relative;
+    z-index:1;
+    margin-top:-100px;
+    display:flex;
+    flex-direction:column;
+    padding:20px;
+    justify-content:flex-start;
+    background-color:rgb(1, 1, 13);
+    height:80vh;
+    color:rgb(234, 233, 233);
+    border:1px solid rgb(180, 177, 177);
+    box-shadow:1px 1px 10px rgb(229, 226, 226);
+    border-radius:50px 50px 0px 0px;
+    gap:10px;
+}
+
+.issueReport{
+    font-size:26px;
+    font-family:var(--font-zain);
+    margin-inline:auto;
+}
+
+.title{
+    width:70vw;
+    background-color:rgb(35, 36, 36);
+    border:1px solid rgb(152, 152, 152);
+    padding-inline:10px;
+    color:rgb(189, 189, 189);
+}
+
+.desc{
+    border-radius:10px;
+    height:12vh;
+    width:85vw;
+    border:1px solid rgb(181, 181, 181);
+    font-size:15px;
+    padding:10px;
+    background-color:rgb(35, 36, 36);
+    color:rgb(189, 189, 189);
+}
+
+.enlarge{
+    font-size:20px;
+    font-family:var(--font-lexend);
+}
+
+.upload{
+    background-color:rgb(11, 11, 11);
+    
+    width:fit-content;
+    height:100%;
+
+    border:1px white solid;
+    box-shadow:1px 1px 10px rgb(154, 153, 150);
+    color:white;
+    padding:2px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.circleMap{
+    height:100px;
+    width:100px;
+    border-radius:50%;
+    border:2px solid white;
+}
+
+.re_button{
+    background-color:rgb(237, 236, 236);
+    color:rgb(6, 0, 0);
+    width:150px;
+    height:30px;
+    margin-inline:auto;
+    margin-top:5px;
+    border-radius:20px;
+}
+
+.re_button:hover{
+    background-color:rgb(62, 234, 62);
+    color:aliceblue;
+    box-shadow:1px 1px 10px rgb(153, 229, 83);
+}
+
+.loc_button{
+    background-color:rgb(203, 209, 203);
+    padding-inline:10px;
+    border-radius:10px;
+}

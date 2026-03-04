@@ -10,8 +10,11 @@ export default function Option3({user,pfp}){
         return <button className={style.OptButton} onClick={()=>router.push("/login")}>Login</button>
     }
     else{
-    //     return <button className={style.OptButton} onClick={()=>router.push("/profile")}>Profile</button>
-    // }
         return <Image className={style.pfp} src={pfp} width={30} height={30} alt="logo"></Image>
     }
+}
+
+export function ReportPage(){
+    const router=useRouter()
+    return <button className={style.OptButton} onClick={()=>router.push("/report")}>Report</button>
 }
