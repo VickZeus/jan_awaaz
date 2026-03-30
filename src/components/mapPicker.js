@@ -30,7 +30,7 @@ function LocationMarker({ setLocation }) {
   return position ? <Marker position={position} /> : null;
 }
 
-export default function MapPicker() {
+export default function MapPicker({onLocationSelect}) {
   const [center, setCenter] = useState(null);
   const [location, setLocation] = useState(null);
 
@@ -54,7 +54,6 @@ export default function MapPicker() {
     );
   }, []);
 
-  // Wait until GPS is loaded
   if (!center) return <p>Fetching your location...</p>;
 
   return (
@@ -65,7 +64,12 @@ export default function MapPicker() {
         className={style.circleMap}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <LocationMarker setLocation={setLocation} />
+        <LocationMarker
+          setLocation={(latlng) => {
+            setLocation(latlng);
+            onLocationSelect(latlng);
+          }}
+        />
       </MapContainer>
     </div>
   );

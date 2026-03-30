@@ -4,6 +4,8 @@ import {useRouter} from "next/navigation"
 import style from "../styles/homepage.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {faArrowTrendUp,faFire,faLocationDot,faAlarmClock} from "@fortawesome/free-solid-svg-icons"
+import Issue_Block from "@/components/issueBlock"
+
 
 function JoinICON({icon,title}){
     return(
@@ -25,11 +27,20 @@ function Options(){
     )
 }
 
+function ContentBlock(){
+    return(
+        <>
+            <Issue_Block/>
+        </>
+    )
+}
+
 export default function MainPage(){
     return(
         <div className={style.mainContent}>
             <div className={style.containerMP}>
                 <Options/>
+                <ContentBlock/>
             </div>
         </div>
     )

@@ -13,11 +13,9 @@ export async function POST(req){
         const {data2,error2}=await supabase
                             .from("info_table")
                             .insert([{uuid,name:username,email}])
-        if(error2)console.log(error2)
         const {data1,error1}=await supabase
                             .from("pass_table")
                             .insert([{uuid,pass:bpass}])
-        if(error1)console.log(error1)
 
         if(error1 || error2){
             return NextResponse.json({error:"Table insertion error"},{status:400})

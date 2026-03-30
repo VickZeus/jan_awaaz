@@ -12,7 +12,7 @@ function LogoTitle() {
   return (
     <div className={style.logoTitle}>
       {text.split("").map((char,index)=>(
-        <span key={index} className={style.letter}>{char}</span>
+        <span key={index} className={style.letter} >{char}</span>
       ))}
       <Logo/>
     </div>

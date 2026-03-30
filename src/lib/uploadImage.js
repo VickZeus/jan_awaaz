@@ -4,7 +4,7 @@ import style from "@/styles/reportpage.module.css"
 import Image from "next/image"
 
 
-function ImageUpload() {
+export default function ImageUpload() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -23,19 +23,6 @@ function ImageUpload() {
     const formData = new FormData();
     formData.append("image", file);
 
-    try {
-      const response = await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-      console.log(data);
-      alert("Upload successful");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   return(
     <div className={style.upload}>
@@ -46,5 +33,3 @@ function ImageUpload() {
     </div>
   );
 }
-
-export default ImageUpload;

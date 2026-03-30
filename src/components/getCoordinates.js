@@ -6,6 +6,6 @@ const MapPicker = dynamic(() => import("@/components/mapPicker"), {
 });
 
 
-export default function GetCoordinates() {
-  return <MapPicker />;
+export default function GetCoordinates({ onLocationSelect }) {
+  return <MapPicker onLocationSelect={onLocationSelect} />;
 }
