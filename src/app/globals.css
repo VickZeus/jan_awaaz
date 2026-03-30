@@ -1,5 +1,9 @@
 @import "tailwindcss";
-
+*{
+  -webkit-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
