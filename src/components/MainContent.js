@@ -6,41 +6,67 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {faArrowTrendUp,faFire,faLocationDot,faAlarmClock} from "@fortawesome/free-solid-svg-icons"
 import Issue_Block from "@/components/issueBlock"
 
-
-function JoinICON({icon,title}){
+function JoinICON({icon,title,clickFunc,selected}){
+    const isActive=title===selected;
     return(
-        <div className={style.join_icon}>
+        <button id={title} className={style.join_icon} style={{backgroundColor:isActive?"white":"transparent",color:isActive?"black":"white"}} onClick={()=>clickFunc(title)}>
             <FontAwesomeIcon icon={icon} style={{fontSize:"16px"}}/>
             <span>{title}</span>
-        </div>
+        </button>
     )
 }
 
-function Options(){
+function Options({setIssues,setLoading}){
+    const[selected,setSelected]=useState("");
+   
+
+    function getResults(k){
+        setSelected(k);
+        setLoading(true);
+        fetch(`/api/getRecords?type=${k}`)
+            .then(res=>res.json())
+            .then(data=>setIssues(data.data))
+            .catch(error=>console.log(error))
+            .finally(()=>setLoading(false))
+    }
     return(
         <div className={style.rowFlex}>
-            <JoinICON icon={faArrowTrendUp} title={"Trending"}/>
-            <JoinICON icon={faAlarmClock} title={"Recent"}/>
-            <JoinICON icon={faLocationDot} title={"Near Me"}/>
-            <JoinICON icon={faFire} title={"Popular"}/>
+            <JoinICON icon={faArrowTrendUp} selected={selected} title={"Trending"} clickFunc={()=>getResults("Trending")}/>
+            <JoinICON icon={faAlarmClock} selected={selected} title={"Recent"} clickFunc={()=>getResults("Recent")}/>
+            <JoinICON icon={faLocationDot} selected={selected} title={"Near Me"} clickFunc={()=>getResults("Near Me")}/>
+            <JoinICON icon={faFire} selected={selected} title={"Popular"} clickFunc={()=>getResults("Popular")}/>
         </div>
     )
 }
 
-function ContentBlock(){
+function ContentBlock({issues}){
     return(
         <>
-            <Issue_Block/>
+            {issues.map(issue=>(
+                <Issue_Block key={issue.issue_id} {...issue}/>
+            ))}
         </>
     )
 }
 
+function Loading(){
+    return(
+        <div className={style.loading}>
+            <p className={style.buffer}></p>
+        </div>
+    )
+}
+
+
 export default function MainPage(){
+    const [issues, setIssues] = useState([])
+    const[isLoading,setLoading]=useState(false);
     return(
         <div className={style.mainContent}>
             <div className={style.containerMP}>
-                <Options/>
-                <ContentBlock/>
+                <Options setIssues={setIssues} setLoading={setLoading}/>
+                {isLoading?<Loading/>:<p></p>}
+                <ContentBlock issues={issues}/>
             </div>
         </div>
     )
