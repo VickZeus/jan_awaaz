@@ -21,7 +21,11 @@ function Options({setIssues,setLoading}){
     function getResults(k){
         setSelected(k);
         setLoading(true);
-        fetch(`/api/records?type=${k}`)
+
+        const latitude=sessionStorage.getItem("latitude");
+        const longtitude=sessionStorage.getItem("longitude");
+
+        fetch(`/api/records?type=${k}&lat=${latitude}&lon=${longtitude}&radius=5000`)
             .then(res=>res.json())
             .then(data=>setIssues(data.data))
             .catch(error=>console.log(error))

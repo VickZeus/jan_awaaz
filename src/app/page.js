@@ -4,7 +4,7 @@ import Option3 from "@/components/profile_login"
 import {GetPFP} from "@/lib/getThings"
 import MainPage from "@/components/MainContent"
 import {ReportPage} from "@/components/profile_login"
-
+import GetAndStoreLocation from "@/components/locationTracker"
 
 
 function LogoTitle() {
@@ -70,6 +70,7 @@ export default function Home() {
     <div className={style.homepage}>
       <HeadSection/>
       <MainPage/>
+      <GetAndStoreLocation/>
       <Footer/>
     </div>
   )
