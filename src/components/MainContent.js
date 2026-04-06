@@ -18,12 +18,10 @@ function JoinICON({icon,title,clickFunc,selected}){
 
 function Options({setIssues,setLoading}){
     const[selected,setSelected]=useState("");
-   
-
     function getResults(k){
         setSelected(k);
         setLoading(true);
-        fetch(`/api/getRecords?type=${k}`)
+        fetch(`/api/records?type=${k}`)
             .then(res=>res.json())
             .then(data=>setIssues(data.data))
             .catch(error=>console.log(error))
@@ -41,11 +39,11 @@ function Options({setIssues,setLoading}){
 
 function ContentBlock({issues}){
     return(
-        <>
+        <div className={style.contentBlock}>
             {issues.map(issue=>(
                 <Issue_Block key={issue.issue_id} {...issue}/>
             ))}
-        </>
+        </div>
     )
 }
 

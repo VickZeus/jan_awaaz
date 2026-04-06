@@ -200,3 +200,8 @@
         border-color:rgb(246, 241, 241);
     }
 }
+
+.contentBlock{
+  height: 70vh;
+  overflow-y:scroll;
+}
