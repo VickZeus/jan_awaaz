@@ -9,6 +9,14 @@ import Image from "next/image"
 
 
 function ExpandedView({...props}){
+const DEFAULT_IMAGE = "https://nnbwatxqncfcddhtkrpw.supabase.co/storage/v1/object/public/report_images/no_image_found.png";
+
+    function getValidImage(url) {
+    if (!url||typeof url!=="string") return DEFAULT_IMAGE;
+    try {
+        new URL(url);return url;
+    }catch{return DEFAULT_IMAGE;}
+    }
     return(
         <div className={style.expandedView}>
             <div onClick={()=>props.setVal(!props.boolval)}>
@@ -19,7 +27,7 @@ function ExpandedView({...props}){
                     <div>{props.description || "Sample_Issue_Description"}</div>         
                     </div>
             </div>
-            <Image style={{borderRadius:"4px",marginBlock:"5px",marginInline:"auto"}}src={props.image_url ||"/default-image.jpg"} alt="Issue Image" width={150} height={150}/>
+            <Image style={{borderRadius:"4px",marginBlock:"5px",marginInline:"auto"}}src={getValidImage(props.image_url)} alt="Issue Image" width={150} height={150}/>
             <Options     
             issue_id={props.issue_id}
             upvote={props.upvote}

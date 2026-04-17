@@ -18,6 +18,8 @@ function JoinICON({icon,title,clickFunc,selected}){
 
 function Options({setIssues,setLoading}){
     const[selected,setSelected]=useState("");
+    const router=useRouter();
+    
     function getResults(k){
         setSelected(k);
         setLoading(true);
@@ -26,7 +28,13 @@ function Options({setIssues,setLoading}){
         const longtitude=sessionStorage.getItem("longitude");
 
         fetch(`/api/records?type=${k}&lat=${latitude}&lon=${longtitude}&radius=5000`)
-            .then(res=>res.json())
+            .then(res=>{
+                if(res.status===401){
+                    router.push("/login");
+                    return;
+                }
+                return res.json()
+            }) 
             .then(data=>setIssues(data.data))
             .catch(error=>console.log(error))
             .finally(()=>setLoading(false))

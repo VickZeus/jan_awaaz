@@ -4,7 +4,7 @@ import IsLogged from "@/lib/loggedOrNot"
 
 export async function POST(req){
     const user=await IsLogged()
-    if(!user)return NextResponse.json({error:"Unauthorized",status:401});
+    if(!user)return NextResponse.json({error:"Unauthorized"},{status:401});
 
     const {id,upvote,downvote,message}=await req.json();
     const {data,error}=await supabase
@@ -16,7 +16,7 @@ export async function POST(req){
     if(error)return NextResponse.json({error:error.message,status:500});
     return NextResponse.json({
         message:"Update Successfull",
-        data,
+        data},{
         status:200
     })
 }
@@ -25,7 +25,7 @@ export async function POST(req){
 
 export async function GET(req){
     const user=await IsLogged()
-    if(!user)return NextResponse.json({error:"Unauthorized",status:401});
+    if(!user)return NextResponse.json({error:"Unauthorized"},{status:401});
 
     const {searchParams}=new URL(req.url);
     const type=searchParams.get("type");
@@ -40,11 +40,11 @@ export async function GET(req){
             .select("*")
             .gte("created_at", fiveHoursAgo)
             .order("created_at",{ascending:false})
-        if(error)return NextResponse.json({error,status:500});
+        if(error)return NextResponse.json({error:error.message},{status:500});
 
         return NextResponse.json({
             message:"Request Successfull",
-            data,
+            data},{
             status:200
         })
     }
@@ -56,35 +56,64 @@ export async function GET(req){
             .order("created_at",{ascending:false})
             .limit(50)
         
-        const filterData=data.filter((issue)=>issue.upvotes>2*issue.downvotes)
-        console.log(filterData)
-            
-        if(error)return NextResponse.json({error,status:500});
+        const filterData=data.filter((issue)=>issue.upvotes>2*issue.downvotes)            
+        if(error)return NextResponse.json({error:error.message},{status:500});
 
         return NextResponse.json({
             message:"Request Successfull",
-            data:filterData,
-            status:200
-        }) 
+            data:filterData
+            },
+            {status:200}
+        ) 
     }
 
-    if(type==="Near Me"){
-        const {data,error}=await supabase
+    if (type==="Near Me") {
+        const { data, error } = await supabase
             .from("issue_table")
-            .select("*")
-            .order("created_at",{ascending:false})
-            .gte("latitude",lat-radius)
-            .lte("latitude", lat+radius)
-            .gte("longitude",long-radius)
-            .lte("longitude",long+radius)
-        if(error)return NextResponse.json({error,status:500});
+            .select("*");
 
-        return NextResponse.json({
-            message:"Request Successfull",
-            data,
-            status:200
-        })
+        if (error) {
+            return NextResponse.json(
+                { error: error.message },
+                { status: 500 }
+            );
+        }
+    function getDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const toRad = (val) => (val * Math.PI) / 180;
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
 
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) *
+                Math.cos(toRad(lat2)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R*c;
+    }
+    const radiusKm = parseFloat(searchParams.get("radius")) / 1000 || 5;
+
+    const filteredData = (data || []).filter(issue => {
+        if (issue.latitude==null || issue.longtitude==null) return false;
+
+        const distance = getDistance(
+            lat,
+            long,
+            Number(issue.latitude),
+            Number(issue.longtitude)
+        );
+        return distance <= radiusKm;
+    });
+    return NextResponse.json(
+        {
+            message: "Request Successful",
+            data: filteredData
+        },
+        { status: 200 }
+        );
     }
 
     if(type==="Popular"){
@@ -94,13 +123,15 @@ export async function GET(req){
             .order("created_at",{ascending:false})
             .limit(10)
         
-        if(error)return NextResponse.json({error,status:500});
+        if(error)return NextResponse.json({error:error.message},{status:500});
 
-        return NextResponse.json({
-            message:"Request Successfull",
-            data,
-            status:200
-        })
+        return NextResponse.json(
+            {
+                message:"Request Successfull",
+                data:data
+            },
+            {status:200}
+        )
     }
 }
 

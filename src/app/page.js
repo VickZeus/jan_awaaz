@@ -5,6 +5,7 @@ import {GetPFP} from "@/lib/getThings"
 import MainPage from "@/components/MainContent"
 import {ReportPage} from "@/components/profile_login"
 import GetAndStoreLocation from "@/components/locationTracker"
+import MainOption from "@/components/MainOption"
 
 
 function LogoTitle() {
@@ -42,9 +43,9 @@ function Logo(){
 
 function Footer(){
   return(
-    <>
-      <div className={style.footer}>Footer Section</div>
-    </>
+    <div className={style.footer}>
+      <p style={{fontSize:"12px"}}>© 2025 JanAwaaz. All rights reserved.</p>
+    </div>
   )
 }
 
@@ -56,7 +57,7 @@ async function HeadSection()
     <div className={style.headSection}>
       <LogoTitle/>
       <div className={`${style.colFlex} ${style.options}`}>
-        <button className={style.OptButton}>Menu</button>
+        <MainOption/>
         <ReportPage/>
         <Option3 user={user} pfp={pfp}/>
       </div>

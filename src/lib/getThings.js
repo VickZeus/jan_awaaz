@@ -5,6 +5,7 @@ import supabase from "@/lib/supabase"
 export async function GetPFP(){
     const user=await IsLogged()
     if(!user)return "/default_pfp.png"
+    
     const {data,error}=await supabase
                             .from("info_table")
                             .select("profile_pic")
