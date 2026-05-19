@@ -1,7 +1,7 @@
+"use client"
 import style from "@/styles/homepage.module.css"
+import {DropDownMenu} from "@/components/ui/dropDownMenu"
 
 export default function MainOption(){
-    return(
-        <button className={style.OptButton}>Menu</button>
-    )
+    return(<DropDownMenu/>)
 }
