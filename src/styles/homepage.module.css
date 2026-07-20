@@ -210,3 +210,18 @@
     color:white;
     
 }
+
+.pfpButton{
+  background: red;
+  border: none;
+  padding: 0;
+  height:fit-content;
+  width:fit-content;
+  border-radius:50%;
+}
+
+.options{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}

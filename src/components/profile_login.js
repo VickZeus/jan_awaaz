@@ -2,15 +2,35 @@
 import {useRouter} from "next/navigation"
 import style from "../styles/homepage.module.css"
 import Image from "next/image"
+import {useState} from "react"
 
 
 export default function Option3({user,pfp}){
+    const [open,setOpen]=useState(false)
     const router=useRouter()
     if(!user){
         return <button className={style.OptButton} onClick={()=>router.push("/login")}>Login</button>
     }
     else{
-        return <Image className={style.pfp} src={pfp} width={30} height={30} alt="logo"></Image>
+        return (
+        <div className="relative inline-block">
+        <button className={style.pfpButton} onClick={() => setOpen(!open)}>
+            <Image className={style.pfp} src={pfp} width={30} height={30} alt="Profile"/>
+        </button>
+
+        {open && (
+            <div className="absolute flex flex-col text-sm items-end right-0 mt-2 w-25 bg-black border border-gray-600 rounded shadow">
+            <button className="w-full text-right block text-white py-2 px-2 hover:bg-gray-100 hover:text-black">
+                Edit Profile
+            </button>
+
+            <button className="w-full text-right block text-red-500 py-2 px-2 hover:bg-red-500 hover:text-white transition">
+                Log Out
+            </button>
+            </div>
+        )}
+        </div>
+        );    
     }
 }
 
