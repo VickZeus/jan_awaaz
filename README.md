@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# JanAwaaz 🇮🇳
 
-## Getting Started
+> An AI-powered citizen grievance reporting and management platform.
 
-First, run the development server:
+JanAwaaz is a smart grievance management platform designed to help citizens report public issues and connect them with the appropriate authorities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Instead of relying on traditional complaint systems, JanAwaaz allows citizens to submit grievances using **text, images, videos, and location data**. The system can analyze and categorize complaints, identify duplicate issues, estimate severity, and help authorities prioritize and resolve problems efficiently.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 👤 User Authentication
+- User registration and login
+- JWT-based authentication
+- Secure HTTP-only cookies
+- Protected API routes
 
-## Learn More
+### 📢 Grievance Reporting
+Citizens can report issues by providing:
+- 📝 Text descriptions
+- 📷 Images
+- 🎥 Videos
+- 📍 Location information
 
-To learn more about Next.js, take a look at the following resources:
+### 🤖 AI-Powered Analysis
+The platform is designed to support:
+- Automatic issue classification
+- Duplicate grievance detection
+- Severity estimation
+- Image-based issue verification
+- Intelligent grievance prioritization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📊 Grievance Management
+- Track submitted grievances
+- View grievance status
+- Search and filter complaints
+- Identify similar complaints
+- Group duplicate or related issues
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🏛️ Authority Management
+The system can help identify the appropriate department or authority responsible for resolving a reported issue.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Frontend
+- Next.js
+- React
+- Tailwind CSS
+
+### Backend
+- Next.js API Routes
+- REST APIs
+
+### Database
+- Supabase
+- PostgreSQL
+
+### Authentication & Security
+- JWT
+- bcrypt
+- HTTP-only cookies
+
+### AI / Machine Learning
+- Python
+- Machine Learning / Deep Learning
+- NLP
+- Computer Vision
+- Sentence Transformers
+
+### Future / Planned Technologies
+- Redis
+- Vector Database (Qdrant / Pinecone)
+- YOLO
+- LLM-based summarization
+
+---
+
+## 🏗️ System Architecture
+
+```text
+                 ┌───────────────────┐
+                 │      Citizen      │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │    Next.js App    │
+                 │   Web Interface   │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │   Authentication  │
+                 │    JWT + bcrypt    │
+                 └─────────┬─────────┘
+                           │
+                           ▼
+                 ┌───────────────────┐
+                 │   Grievance API   │
+                 └─────────┬─────────┘
+                           │
+             ┌─────────────┴─────────────┐
+             ▼                           ▼
+   ┌───────────────────┐       ┌───────────────────┐
+   │     Supabase      │       │    AI Pipeline    │
+   │    PostgreSQL     │       │ Classification    │
+   └───────────────────┘       │ Duplicate Check   │
+                               │ Severity Analysis │
+                               └─────────┬─────────┘
+                                         │
+                                         ▼
+                               ┌───────────────────┐
+                               │   Authorities     │
+                               │  & Departments    │
+                               └───────────────────┘
