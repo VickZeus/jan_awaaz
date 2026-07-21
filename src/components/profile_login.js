@@ -52,3 +52,4 @@ export function ReportPage(){
     const router=useRouter()
     return <button className={style.OptButton} onClick={()=>router.push("/report")}>Report</button>
 }
+
