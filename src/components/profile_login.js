@@ -5,15 +5,29 @@ import Image from "next/image"
 import {useState} from "react"
 
 
+
 export default function Option3({user,pfp}){
     const [open,setOpen]=useState(false)
     const router=useRouter()
+
+    async function handleLogout(){
+        const response= await fetch("/api/logout",{
+            method:"POST"
+        })
+
+        if(response.ok){
+            router.push("/")
+        }
+    }
+
+
     if(!user){
         return <button className={style.OptButton} onClick={()=>router.push("/login")}>Login</button>
     }
     else{
         return (
         <div className="relative inline-block">
+                
         <button className={style.pfpButton} onClick={() => setOpen(!open)}>
             <Image className={style.pfp} src={pfp} width={30} height={30} alt="Profile"/>
         </button>
@@ -24,7 +38,7 @@ export default function Option3({user,pfp}){
                 Edit Profile
             </button>
 
-            <button className="w-full text-right block text-red-500 py-2 px-2 hover:bg-red-500 hover:text-white transition">
+            <button className="w-full text-right block text-red-500 py-2 px-2 hover:bg-red-500 hover:text-white" onClick={handleLogout}>
                 Log Out
             </button>
             </div>
