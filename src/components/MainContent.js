@@ -1,10 +1,16 @@
 "use client"
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import {useRouter} from "next/navigation"
 import style from "../styles/homepage.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {faArrowTrendUp,faFire,faLocationDot,faAlarmClock} from "@fortawesome/free-solid-svg-icons"
 import Issue_Block from "@/components/issueBlock"
+import dynamic from "next/dynamic"
+
+const UserMap = dynamic(
+  () => import("@/components/UserMap"),
+  { ssr: false }
+);
 
 function JoinICON({icon,title,clickFunc,selected}){
     const isActive=title===selected;
@@ -68,12 +74,41 @@ function Loading(){
 }
 
 
+
+function MapUI() {
+    const [location, setLocation] = useState(null);
+
+    useEffect(() => {
+        const latitude = sessionStorage.getItem("latitude");
+        const longitude = sessionStorage.getItem("longitude");
+
+        if (latitude && longitude) {
+            setLocation({
+                latitude: Number(latitude),
+                longitude: Number(longitude),
+            });
+        }
+    }, []);
+
+    if (!location) {
+        return <p className="text-white">Loading Map...</p>;
+    }
+
+    return (
+        <UserMap
+            latitude={location.latitude}
+            longitude={location.longitude}
+        />
+    );
+}
+
 export default function MainPage(){
     const [issues, setIssues] = useState([])
     const[isLoading,setLoading]=useState(false);
     return(
         <div className={style.mainContent}>
             <div className={style.containerMP}>
+                <MapUI/>
                 <Options setIssues={setIssues} setLoading={setLoading}/>
                 {isLoading?<Loading/>:<p></p>}
                 <ContentBlock issues={issues}/>

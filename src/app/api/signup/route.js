@@ -3,16 +3,24 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 import {randomUUID} from "crypto";
 
+let curr=0;
+function generateRandomImage(){
+    curr=(curr+1)%30;
+    return `/profile_pictures/avatar${curr}.png`;
+}
+
 export async function POST(req){
     try{
         const body=await req.json()
         const {username,email,password}=body;
         const bpass=await bcrypt.hash(password,10)
 
+        const imageURL=generateRandomImage();
+
         const uuid=randomUUID();
         const {data2,error2}=await supabase
                             .from("info_table")
-                            .insert([{uuid,name:username,email}])
+                            .insert([{uuid,name:username,email,profile_pic:imageURL}])
         const {data1,error1}=await supabase
                             .from("pass_table")
                             .insert([{uuid,pass:bpass}])
