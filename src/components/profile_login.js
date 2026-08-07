@@ -33,7 +33,7 @@ export default function Option3({user,pfp}){
         </button>
 
         {open && (
-            <div className="absolute flex flex-col text-sm items-end right-0 mt-2 w-25 bg-black border border-gray-600 rounded shadow">
+            <div className="absolute flex flex-col text-sm items-end right-0 mt-2 w-25 bg-black border border-gray-600 rounded shadow z-1000">
             <button className="w-full text-right block text-white py-2 px-2 hover:bg-gray-100 hover:text-black">
                 Edit Profile
             </button>

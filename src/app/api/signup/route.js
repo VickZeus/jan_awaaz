@@ -2,14 +2,18 @@ import supabase from "@/lib/supabase"
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 import {randomUUID} from "crypto";
+import  {sendOTP} from "@/lib/sendEmail";
 
-let curr=0;
 function generateRandomImage(){
-    curr=(curr+1)%30;
+    let curr=Math.floor(Math.random()*30);
     return `/profile_pictures/avatar${curr}.png`;
 }
 
-export async function POST(req){
+
+
+
+
+export async function POST(req){ // Basically checks whether there exists any email already and initialises the profilepicture of the user to a random image from the profile_pictures folder and inserts the data into the database
     try{
         const body=await req.json()
         const {username,email,password}=body;
@@ -17,22 +21,57 @@ export async function POST(req){
 
         const imageURL=generateRandomImage();
 
-        const uuid=randomUUID();
-        const {data2,error2}=await supabase
-                            .from("info_table")
-                            .insert([{uuid,name:username,email,profile_pic:imageURL}])
-        const {data1,error1}=await supabase
-                            .from("pass_table")
-                            .insert([{uuid,pass:bpass}])
 
-        if(error1 || error2){
-            return NextResponse.json({error:"Table insertion error"},{status:400})
+        const {data:emailC,error:errEm}=await supabase 
+                            .from("info_table")
+                            .select("email")
+                            .eq("email",email)
+        if(errEm){
+            return NextResponse.json({error:"Error occurred while checking email"},{status:500})
         }
+        if(emailC.length>0){
+            return NextResponse.json({error:"Email Already Exists"},{status:400})
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otp_has = await bcrypt.hash(otp, 10);
+
+        const expires_at = new Date(Date.now() + 5 * 60 * 1000);
+        
+
+        const uuid=randomUUID();
+        const {data,error}=await supabase
+                            .from("userVerify_temp_table")
+                            .insert([{oid:uuid,username,email,hpass:bpass,profile_pic:imageURL,otp_has,expires_at}])
+        
+        if(error){
+            return NextResponse.json({error:error.message},{status:500})
+        }   
         else{
-            return NextResponse.json({message:"User Inserted"})
+            try{
+                await sendOTP(email,otp);
+            }
+            catch(error){
+
+                await supabase
+                .from("userVerify_temp_table")
+                .delete()
+                .eq("email",email)
+
+                return NextResponse.json(
+                    {error:error.message},
+                    {status:500}
+                )
+            }
+            return NextResponse.json({message:email},{status:201})
         }
+
     }
     catch(err){
-        return NextResponse.json({error:"Server Error"},{status:500})
+        return NextResponse.json({error:error.message},{status:500})
     }
 } 
+
+
+
+
