@@ -1,6 +1,7 @@
 import { Zain,Lexend} from "next/font/google";
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const zain = Zain({
   variable: "--font-zain",
