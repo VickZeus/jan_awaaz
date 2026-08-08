@@ -21,7 +21,15 @@ export async function POST(req){
         const user=data[0];
         const isOtpValid=await bcrypt.compare(otp,user.otp_has);
 
-        if(new Date(user.expires_at)<new Date())return NextResponse.json({error:"OTP Expired"},{status:400})
+        if(new Date(user.expires_at)<new Date()){
+            const {error:delEr}= await supabase 
+                                .from("userVerify_temp_table")
+                                .delete()
+                                .eq("email",email)
+            if(delEr)return NextResponse.json({error:"Error occurred while deleting expired OTP"},{status:500})
+            return NextResponse.json({error:"OTP Expired"},{status:400})
+        }
+
         if(!isOtpValid)return NextResponse.json({error:"Invalid OTP"},{status:400})
 
         

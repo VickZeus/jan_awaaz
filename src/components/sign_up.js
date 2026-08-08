@@ -10,7 +10,7 @@ import style from "@/styles/loginpage.module.css"
 export default function SignInForm(){
     const [message,setMessage]= useState("")
     const [email,setEmail]=useState("")
-    const [otp,setOtp]=useState("")
+    const [otp,setOtp]=useState(" ")
     const [formData,setformData]=useState({
         username:"",password:"",email:"",password2:""
     }) 
@@ -54,20 +54,22 @@ export default function SignInForm(){
     async function handleSubmit2(e){
         e.preventDefault()
         try{
-            const res=await fetch("/api/verify_otp",{
+            const res=await fetch("/api/auth/verify_otp",{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({email,otp})
             })
 
             const data=await res.json();
+
             if(!res.ok){
                 setMessage(data.error || "OTP verification failed");return;
             }
             router.push("/login");
         }
         catch(error){
-            setMessage("Something Went Wrong")
+            console.log(error)
+            setMessage(error.message)
         }
     }
     

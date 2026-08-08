@@ -10,9 +10,6 @@ function generateRandomImage(){
 }
 
 
-
-
-
 export async function POST(req){ // Basically checks whether there exists any email already and initialises the profilepicture of the user to a random image from the profile_pictures folder and inserts the data into the database
     try{
         const body=await req.json()
