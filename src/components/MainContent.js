@@ -83,6 +83,7 @@ function MapUI() {
         const longitude = sessionStorage.getItem("longitude");
 
         if (latitude && longitude) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setLocation({
                 latitude: Number(latitude),
                 longitude: Number(longitude),
